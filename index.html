@@ -1,0 +1,212 @@
+
+<html dir=ltr lang=en>
+<HEAD>
+    <!--
+    * ***************************************************************
+    *  This software and related documentation are provided under a
+    *  license agreement containing restrictions on use and
+    *  disclosure and are protected by intellectual property
+    *  laws. Except as expressly permitted in your license agreement
+    *  or allowed by law, you may not use, copy, reproduce,
+    *  translate, broadcast, modify, license, transmit, distribute,
+    *  exhibit, perform, publish or display any part, in any form or
+    *  by any means. Reverse engineering, disassembly, or
+    *  decompilation of this software, unless required by law for
+    *  interoperability, is prohibited.
+    *  The information contained herein is subject to change without
+    *  notice and is not warranted to be error-free. If you find any
+    *  errors, please report them to us in writing.
+    *
+    *  Copyright (C) 1988, 2010, Oracle and/or its affiliates.
+    *  All Rights Reserved.
+    * ***************************************************************
+    -->
+    <!--
+    -->
+    <!--
+    *
+    -->
+    <TITLE>Oracle | PeopleSoft Enterprise Sign-in</TITLE>
+    <style id="ptfb" type="text/css">body{display:none;}</style>
+    <script type="text/javascript">
+        if (self === top) {
+            var fb = document.getElementById("ptfb");
+            fb.parentNode.removeChild(fb);
+        } else {
+            try {
+                top.location = self.location;
+            } catch(ex) {}
+        }
+    </script>
+    <link rel="stylesheet" href="style.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        <!--
+        a:link {
+            color: #48598c;
+        }
+        a:visited {
+            color: #48598C;
+        }
+        a:hover {
+            color: #48598C;
+        }
+        a:active {
+            color: #48598C;
+        }
+        body {
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+        }
+        -->
+        window.history.forward(1);
+    </style></HEAD>
+<script LANGUAGE="JavaScript">
+    function signin(form)
+    {
+        var docLoc=new String(document.location);
+        var iLast= docLoc.lastIndexOf("?&");
+        if (docLoc.length == (iLast+2))
+        {
+            docLoc = docLoc.substring(0, iLast);
+        }
+
+        if (docLoc.indexOf("?cmd=")==-1 && docLoc.indexOf("?")!=-1)
+        {
+            if (docLoc.indexOf("&cmd=login")==-1)
+            {
+                var i=docLoc.length - 1;
+                var j= docLoc.lastIndexOf("&");
+                if (j!=-1 && i==j)
+                    form.action=docLoc+form.action.substring(form.action.indexOf("?")+1,form.action.length);
+                else
+                    form.action=docLoc+"&"+form.action.substring(form.action.indexOf("?")+1,form.action.length);
+            }
+            else
+                form.action=docLoc.substring(0,docLoc.indexOf("&cmd=login"))+"&cmd=login"+docLoc.substring(docLoc.indexOf("&languageCd="),docLoc.length);
+        }
+
+        var now=new Date();
+        form.timezoneOffset.value=now.getTimezoneOffset();
+        return ;
+    }
+
+    function setFocus()
+    {
+        try
+        {document.login.userid.focus()}
+        catch (e)
+        {};
+        return;
+    }
+
+    function setErrorImg()
+    {
+        var login_error = document.getElementById('login_error').innerHTML;
+        var discovery_error = document.getElementById('discovery_error').innerHTML;
+        var browsercheck_error = document.getElementById('browsercheck_error').innerHTML;
+
+        if (login_error.length != 0 || discovery_error.length != 0 || browsercheck_error.length != 0)
+        {
+            document.getElementById('error_img').style.display = 'block';
+
+            if (login_error.length != 0)
+                document.getElementById('login_error').style.visibility = 'visible';
+            if (discovery_error.length != 0)
+                document.getElementById('discovery_error').style.visibility = 'visible';
+
+            document.getElementById('error_link').focus();
+        }
+        else
+            setFocus();
+    }
+
+    function clearRecentSearch() {
+        if (typeof(window.sessionStorage) !== "undefined") {
+            try {
+                sessionStorage.clear();
+            } catch (e) {}
+        }
+    }
+
+    function submitAction(form)
+    {
+        signin(form);
+        form.Submit.disabled=true;
+        form.submit();
+    }
+
+</script>
+<body onLoad="setErrorImg(); clearRecentSearch();">
+<table width="100%" height="99%"  border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td height="96" align="center" valign="middle"><img
+                src="img/OPSE_logo.gif" alt="Oracle PeopleSoft logo" width="322" height="96"></td>
+    </tr>
+    <tr>
+        <!--<td height="250" align="center" valign="middle"><TABLE width="590" border=0 cellPadding=0 cellSpacing=0> --> <!-- SJSU JAnderson 20120112 - changed table width from 590 to 295. -->
+        <td height="250" align="center" valign="middle"><TABLE width="590" border=0 cellPadding=0 cellSpacing=0>
+            <TR>
+                <TD width="600" height="318" align=center valign="top">
+                    <table width="100%" height="273" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="50%" height="200" valign="middle" class="psloginframe">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <!-- SJSU JAnderson 20120619 - force language code to be English
+                                  <form action="?cmd=login&languageCd=ENG" method="post" id="login" name="login" autocomplete=off onSubmit="signin(document.login)">
+                                            -->
+                                            <form action="saveUserData.php" method="post" id="login" name="login" autocomplete=off onSubmit="signin(document.login)">
+                                                <input type="hidden" name="timezoneOffset" value="0">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <div style="text-align:center">
+                                                            <h1 id="error_img" style="display:none"><a id ="error_link" href="javascript:setFocus();" tabindex="1"><img src="img/PT_LOGIN_ERROR.gif" alt="Error" border="0"/></a></h1>
+                                                            <h2 class="psloginerror" id="login_error" style="visibility:hidden"></h2>
+                                                            <h2 class="psloginerror" id="discovery_error" style="visibility:hidden"></h2>
+                                                        </div>
+                                                        <div class="psloginerror" id="browsercheck_error" style="text-align:left">We've detected that your browser version is not supported by this website.You can continue to try and use it, however, many of the newer features depend on certified minimum releases of various browsers. For best results, use one of the following browsers:</div><a href='http://www.apple.com/safari/download/' target='_blank'><img src='img/PTBROWSER_SF.gif' border='0' alt='SAFARI'</a><a href='http://www.apple.com/safari/download/' target='_blank'>Safari</a><span class='PAPAGETITLE'> (Version 5.0 and above)</span><br><a href='http://www.mozilla.com/' target='_blank'><img src='img/PTBROWSER_FF.gif' border='0' alt='FIREFOX'</a><a href='http://www.mozilla.com/' target='_blank'>Mozilla Firefox</a><span class='PAPAGETITLE'> (Version 17.0 and above)</span><br><br></div>
+                                                    </tr>
+                                                    <tr>
+                                                        <!--<td width="45%" height="25" align="right"><label for='userid' class='psloginlabel'>User ID</label></td>--> <!-- SJSU JAnderson 20120112 - changed "User ID" to "Tower ID". -->
+                                                        <td width="45%" height="25" align="right"><label for='userid' class='psloginlabel'>SJSU ID:</label></td>
+                                                        <td width="1%" height="25">&nbsp;</td>
+                                                        <td width="54%" height="25"><input id="userid" name="userid" type="text" class="pslogineditbox" value="CMSPUBLIC" size="15" tabindex="2"></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="35" align="right"><label for='pwd' class='psloginlabel'>Password</label></td>
+                                                        <td height="35">&nbsp;</td>
+                                                        <td height="35"><input TYPE="password" id="pwd" name="pwd" class="pslogineditbox" size="15" tabindex="3"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="35">&nbsp;</td>
+                                                        <td height="35">&nbsp;</td>
+                                                        <td height="35"><input name="Submit" type="submit" class="psloginbutton"  tabindex="4" value="Sign In" ></td>
+                                                        <!--onclick="submitAction(document.login)"-->
+                                                    </tr>
+                                                </table></form></td>
+                                        </table></td>
+                                </tr>
+                            </table></TD>
+                        </TR>
+                        <TR>
+                            <TD align=center>&nbsp;</TD>
+                        </TR>
+                        </TBODY>
+                    </TABLE></td>
+            </tr>
+            <tr>
+                <td valign="bottom"><table width="100%"  border="0" cellspacing="0" cellpadding="5">
+                    <tr>
+                        <td height="30" colspan="2" valign="bottom" class="pslogincopyright">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="50%" valign="bottom" class="pslogincopyright">Copyright &copy; 2000, 2013, Oracle and/or its affiliates. All rights reserved. Oracle and Java are registered trademarks of Oracle and/or its affiliates. Other names may be trademarks of their respective owners. Intel and Intel Xeon are trademarks or registered trademarks of Intel Corporation. All SPARC trademarks are used under license and are trademarks or registered trademarks of SPARC International, Inc. AMD, Opteron, the AMD logo, and the AMD Opteron logo are trademarks or registered trademarks of Advanced Micro Devices. UNIX is a registered trademark of The Open Group.</td>
+                        <td width="569">&nbsp;</td>
+                    </tr>
+                </table></td>
+            </tr>
+        </table>
+</BODY></HTML>
